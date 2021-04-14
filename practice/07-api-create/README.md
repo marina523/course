@@ -3,7 +3,7 @@
 
 I have written an API with at least 5 endpoints. It is all about words,
 and can be useful for games such as Scribble and Mad Libs. 
-## The endpoints:
+## Endpoints:
 /
 ###### description: 
 this is the zone apex, with an introductory welcome to the user.
