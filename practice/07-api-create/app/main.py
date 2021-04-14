@@ -23,16 +23,19 @@ def read_root():
 # Adds two integers as PATH parameters
 @app.get("/count/{word1}/{word2}")
 def add_me(word1: str, word2: str):
-    for character in word1:
-        if character.isdigit():
-            contains_digit = True
-    if contains_digit = True:
-        return {"error": "Do not put a number in your word"}
-    else:
+    try:
+        for character in word1:
+            if character.isdigit():
+                return {"error": "Do not put a number in your word"}
+        for characters in word2:
+            if characters.isdigit():
+                return {"error": "Do not put a number in your word"}
         len1=len(word1)
         len2=len(word2)
         sum = len1+len2
         return {"letter count": sum}
+    except:
+        return {"You should enter two words"}
 
 
 # Introduce data types and defaults from the Optional library
