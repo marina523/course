@@ -21,10 +21,18 @@ def read_root():
     return {"Welcome to my DS3002 project!"}
 
 # Adds two integers as PATH parameters
-@app.get("/add/{number_1}/{number_2}")
-def add_me(number_1: int, number_2: int):
-    sum = number_1 + number_2
-    return {"sum": sum}
+@app.get("/count/{word1}/{word2}")
+def add_me(word1: str, word2: str):
+    for character in word1:
+        if character.isdigit():
+            contains_digit = True
+    if contains_digit = True:
+        return {"error": "Do not put a number in your word"}
+    else:
+        len1=len(word1)
+        len2=len(word2)
+        sum = len1+len2
+        return {"letter count": sum}
 
 
 # Introduce data types and defaults from the Optional library
@@ -40,6 +48,7 @@ def get_words(adj_num: int, noun_num: int):
         adj=adj_r.readlines()
         adj_v=adj[adj_num-1]
         return {"adjective": adj_v.rstrip('\n'), "noun":noun_v.rstrip('\n')}
+
 
 
 # Start using the "Item" BaseModel
