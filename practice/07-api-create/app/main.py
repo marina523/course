@@ -62,35 +62,16 @@ def reading_words(topic: str, adjective: str, noun: str):
 
 @app.get("/scrabble/{enter}")  #returns the total points dedicated to a word from Scrabble
 def scrabble_words(enter: str):
+    score = {"a": 1, "c": 3, "b": 3, "e": 1, "d": 2, "g": 2, 
+         "f": 4, "i": 1, "h": 4, "k": 5, "j": 8, "m": 3, 
+         "l": 1, "o": 1, "n": 1, "q": 10, "p": 3, "s": 1, 
+         "r": 1, "u": 1, "t": 1, "w": 4, "v": 4, "y": 4, 
+         "x": 8, "z": 10}
+    def scrabble_score(userin):
+        return sum([score[c.lower()] for c in userin])
     if enter.isalpha():
-        one_letter_point = ['e', 'a', 'o', 't', 'i', 'n', 'r', 's', 'l', 'u']
-        two_letter_point = ['d', 'g']
-        three_letter_point = ['c', 'm', 'b', 'p']
-        four_letter_point = ['h', 'f', 'w', 'y', 'v']
-        five_letter_point = ['k']
-        eight_letter_point = ['j', 'x']
-        ten_letter_point = ['q', 'z']
-
-        def scrabble_word_count(userword):
-            total = 0
-            for letter in userword:
-                if letter in one_letter_point:
-                    total += 1
-                elif letter in two_letter_point:
-                    total += 2
-                elif letter in three_letter_point:
-                    total += 3
-                elif letter in four_letter_point:
-                    total += 4
-                elif letter in five_letter_point:
-                    total += 5
-                elif letter in eight_letter_point:
-                    total += 8
-                elif letter in ten_letter_point:
-                    total += 10
-            return total
-        ans=scrabble_word_count(enter)
-        return {"Points": ans}
+        answer=scrabble_score(enter)
+        return {"Points": answer}
     else:    
         return {"You should only input characters that are possible in Scrabble. For example, no spaces or numbers, etc."}
 
