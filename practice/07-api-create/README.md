@@ -17,7 +17,7 @@ in those two words combined. These items should only be composed of letters.
 /descriptiveword/{adj_num}/{noun_num}
 - description: 
 both items to be entered (variables adj_num and noun_num) should be 
-integers. It returns two generated words, an adjective and noun. These come from 
+integers between 1 and 135. It returns two generated words, an adjective and noun. These come from 
 the files adjectives.txt and nouns.txt respectively. The numbers entered by the 
 user indicates an index for a row in the text file (each row has a word).
 
