@@ -18,25 +18,28 @@ class Item(BaseModel):
 
 @app.get("/")  # zone apex
 def read_root():
-    return {"Hello": "Neal Magee"}
+    return {"Welcome to my DS3002 project!"}
 
 # Adds two integers as PATH parameters
 @app.get("/add/{number_1}/{number_2}")
 def add_me(number_1: int, number_2: int):
     sum = number_1 + number_2
     return {"sum": sum}
-    
+
 
 # Introduce data types and defaults from the Optional library
-@app.get("/items/{item_id}")
-def read_items(item_id: int, q: str = None, s: str = None):
-    # to-do: reach into database, use item_id as query parameter
-    # and fetch results. Parse into payload.
-    # - database
-    # - flat text
-    # - another api (internal)
-    # - another api (external)
-    return {"item_id": item_id, "q": q, "s": s}
+@app.get("/descriptiveword/{adj_num}/{noun_num}")
+def get_words(adj_num: int, noun_num: int):
+    if adj_num > 135:
+        return {"error": "Select an integer between 1 and 135"}
+    else:
+        noun_r=open('nouns.txt')
+        noun=noun_r.readlines()
+        noun_v=noun[noun_num-1]
+        adj_r=open('adjectives.txt')
+        adj=adj_r.readlines()
+        adj_v=adj[adj_num-1]
+        return {"adjective": adj_v.rstrip('\n'), "noun":noun_v.rstrip('\n')}
 
 
 # Start using the "Item" BaseModel
