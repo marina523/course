@@ -19,7 +19,7 @@ def add_me(word1: str, word2: str):
         return {"error": "Only letters are allowed. For example, make sure you did not insert a space, hyphen, number, etc."}
         
 
-@app.get("/descriptiveword/{adj_num}/{noun_num}")
+@app.get("/descriptiveword/{adj_num}/{noun_num}")  #outputs an adjective and noun
 def describing_words(adj_num: str, noun_num: str):
     if adj_num.isdecimal():
         adj_num=int(adj_num)
@@ -39,7 +39,7 @@ def describing_words(adj_num: str, noun_num: str):
     else: 
         return {"error": "Only numbers allowed, specifically between 0 and 135"}
         
-@app.get("/madlibs/{topic}/{adjective}/{noun}")
+@app.get("/madlibs/{topic}/{adjective}/{noun}")  #choice of 3 madlibs using an adjective and noun
 def reading_words(topic: str, adjective: str, noun: str):
     topic=topic.lower()
     if (topic=="zoo"):
@@ -60,19 +60,41 @@ def reading_words(topic: str, adjective: str, noun: str):
     else:
         return {"The first item you're entering should be one of three options: zoo, park, clothing. Do not put anything extra (for example, do not add any quotation marks or commas)."}
 
-@app.get("/scrabble/{enter}")
+@app.get("/scrabble/{enter}")  #returns the total points dedicated to a word from Scrabble
 def scrabble_words(enter: str):
-        enter=enter.upper()
-        letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
-        score = [1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 4, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10]
-        letter_to_points = {key: value for key, value in zip(letters, score)}
-        letter_to_points[" "] = 0
-        total = 0
-        for letter in enter:
-            total += letter_to_points.get(letter, 0)
-            return {"Points": total}
+    if enter.isalpha():
+        one_letter_point = ['e', 'a', 'o', 't', 'i', 'n', 'r', 's', 'l', 'u']
+        two_letter_point = ['d', 'g']
+        three_letter_point = ['c', 'm', 'b', 'p']
+        four_letter_point = ['h', 'f', 'w', 'y', 'v']
+        five_letter_point = ['k']
+        eight_letter_point = ['j', 'x']
+        ten_letter_point = ['q', 'z']
 
-@app.get("/list/{typer}")  
+        def scrabble_word_count(userword):
+            total = 0
+            for letter in userword:
+                if letter in one_letter_point:
+                    total += 1
+                elif letter in two_letter_point:
+                    total += 2
+                elif letter in three_letter_point:
+                    total += 3
+                elif letter in four_letter_point:
+                    total += 4
+                elif letter in five_letter_point:
+                    total += 5
+                elif letter in eight_letter_point:
+                    total += 8
+                elif letter in ten_letter_point:
+                    total += 10
+            return total
+        ans=scrabble_word_count(enter)
+        return {"Points": ans}
+    else:    
+        return {"You should only input characters that are possible in Scrabble. For example, no spaces or numbers, etc."}
+
+@app.get("/list/{typer}")  #returns a string link address to find a list of either verbs, nouns, adjectives or adverbs
 def read_root(typer: str):
     typer=typer.lower()
     if (typer=="verb"):
