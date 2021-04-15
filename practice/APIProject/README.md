@@ -4,7 +4,7 @@
 I have written an API with at least 5 endpoints. It is all about words,
 and can be useful for games such as Scribble and Mad Libs. The primary code file is called main.py.
 One of the endpoints (as described below) requires the nouns.txt and adjectives.txt files which are in the same folder 
-called app. It is important to make sure you are in the right directory (in the app folder inside of the API Chatbot Data Project folder). 
+called app. It is important to make sure you are in the right directory (in the app folder inside of the APIProject folder). 
 I also ran the ```uvicorn main:app  --reload``` which enabled the "A service is available of port 8000" pop-up.
 ## Endpoints:
 /
