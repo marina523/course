@@ -11,8 +11,8 @@ this is the zone apex, with an introductory welcome to the user.
 /count/{word1}/{word2}
 - description: 
 the bracketed words word1 and word2 represent two words 
-that the user will enter. The output is an integer, the number of letters
-in those two words combined. These items should only be composed of letters.
+that the user will enter. The output is an integer, a sum of the number of letters
+in those two words. These items should only be composed of letters.
 
 /descriptiveword/{adj_num}/{noun_num}
 - description: 
@@ -33,10 +33,12 @@ according to the topic typed, with filled in blanks for an adjective and noun.
 - description: 
 the user enters a single word that can be created in a Scrabble game. For example,
 characters such as spaces, hyphens and numbers will yield an error message. The endpoint returns
-the points earned for playing that entered word in a game of Scrabble.
+the points earned for playing that entered word in a game of Scrabble. In my code, I allocated points to each
+letter in the alphabet to do this.
 
 /list/{typer}
 - description: 
 the user enters one of the following for the {typer} item: noun, verb, adjective,
 adverb. Hence, only letters should be entered. It returns a string telling the user to check out 
-a specific website that can give them a list of words depending on what the user entered.
+a specific website that can give them a list of words (either adverbs, adjective, nouns or adverbs)
+depending on what the user entered.
