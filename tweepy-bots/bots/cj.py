@@ -1,59 +1,61 @@
-
-#!/usr/bin/env python
 import tweepy
 import time
 import random
-# Authenticate to Twitter
-FILE_NAME = 'last_seen_id.txt'
-def retrieve_last_seen_id(file_name):
-    f_read = open(file_name, 'r')
-    last_seen_id = str(f_read.read().strip())
-    f_read.close()
-    return last_seen_id
 
-def store_last_seen_id( last_seen_id, file_name):
-    f_write = open(file_name, 'w')
-    f_write.write(str(last_seen_id))
-    f_write.close()
-    return
 CONSUMER_KEY = 'yXI09sPx3CSr0omvH7oT6yavU'
 CONSUMER_SECRET = 'lm9nrA5pL2Xf9n2NoOJlid2fXA9vt0uCDX12trCZvlheSywr1I'
 ACCESS_TOKEN = '1390884054317342721-ifWzBdqZiMsCoeTuSTlIcbcNoxo9NA'
 ACCESS_TOKEN_SECRET = 'VHKoL1Nu6b1RWh6WWH4z3XCkHEFn97sQ5STxLfoardjYn'
-
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-auth.set_access_token(ACCESS_TOKEN,ACCESS_TOKEN_SECRET)
-api=tweepy.API(auth)
+auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+api = tweepy.API(auth)
 
-#mentions=api.mentions_timeline()
-#for mention in mentions:
-    #print(str(mention.id) + '-' + mention.text)
-    #if 'support' in mention.text.lower():
-        #print('found')
-        #print('respondin')
+FILE_NAME = 'last_seen_id.txt'
 
+def retrieve_last_seen_id(file_name):
+    f_read = open(file_name, 'r')
+    last_seen_id = int(f_read.read().strip())
+    f_read.close()
+    return last_seen_id
+
+def store_last_seen_id(last_seen_id, file_name):
+    f_write = open(file_name, 'w')
+    f_write.write(str(last_seen_id))
+    f_write.close()
+    return
 
 def reply_to_tweets():
+    print('retrieving and replying to tweets...', flush=True)
     last_seen_id = retrieve_last_seen_id(FILE_NAME)
-    tweets = api.mentions_timeline(last_seen_id, tweet_mode='extended')
-    for tweet in reversed(tweets):
-        last_seen_id = tweet.id
+    
+    mentions = api.mentions_timeline(
+                        last_seen_id,
+                        tweet_mode='extended')
+    for mention in reversed(mentions):
+        print(str(mention.id) + ' - ' + mention.full_text, flush=True)
+        last_seen_id = mention.id
         store_last_seen_id(last_seen_id, FILE_NAME)
-        if 'support' in tweet.full_text.lower():
-            print(str(tweet.id) + '-' +  tweet.full_text)
-            api.update_status('@' + tweet.user.screen_name +
-                    'Some things you can say: last post? a vegan? a vegetarian? if you want a recommendation of veetarian food from a continent, just tweet it (except Antarctica)', tweet.id)
-
-            
-        elif 'last' in tweet.full_text.lower():
-            print(str(tweet.id) + '-' +  tweet.full_text)
+        if 'help' in mention.full_text.lower():
+            print('found', flush=True)
+            print('responding back...', flush=True)
+            api.update_status('@' + mention.user.screen_name +
+                    " " 'Some things you can say: last post? a vegan? a vegetarian? if you want a recommendation of vegetarian food from a continent, just tweet it (except Antarctica)', mention.id)
+        if 'last' in mention.full_text.lower():
             timeline = api.home_timeline()
+            line=[]
+            aut=[]
             for tweetf in timeline:
-                api.update_status(f"{tweetf.user.name} said {tweetf.text}", tweet.id)
-                
-                
-        elif 'australia' in tweet.full_text.lower():
-            print(str(tweet.id) + '-' +  tweet.full_text)
+                line.append(tweetf.text)
+                aut.append(tweetf.user.name)
+                auto=aut[0]
+                writ=line[0]
+                try:
+                    api.update_status('@' + mention.user.screen_name + " "
+                        f"{auto} said {writ}", mention.id)
+                except:
+                    pass
+        if 'australia' in mention.full_text.lower():
+            print('found', flush=True)
             food=['Vegetarian sausage rolls',
             'Mushroom sliders with pickled fennel and harissa creme fraiche',
             'Eggplant parmigiana "meatball" subs',
@@ -67,9 +69,9 @@ def reply_to_tweets():
             num=random.randint(1,10)
             index=food[num-1]
             ans=str(index)
-            api.update_status(ans, tweet.id)
-        elif 'europe' in tweet.full_text.lower():
-            print(str(tweet.id) + '-' +  tweet.full_text)
+            api.update_status('@' + mention.user.screen_name + ans, mention.id)
+        if 'europe' in mention.full_text.lower():
+            print('found', flush=True)
             food=['French Lentils and Kale',
             'Avocat Tartine',
             'Vegan Spaghetti Bolognese',
@@ -83,15 +85,15 @@ def reply_to_tweets():
             num=random.randint(1,10)
             index=food[num-1]
             ans=str(index)
-            api.update_status(ans, tweet.id)
-        elif 'define vegan' in tweet.full_text.lower():
-            print(str(tweet.id) + '-' +  tweet.full_text)
-            api.update_status('a person who does not eat any food derived from animals and who typically does not use other animal products.', tweet.id)
-        elif 'define vegetarian' in tweet.full_text.lower():
-            print(str(tweet.id) + '-' +  tweet.full_text)
-            api.update_status('a person who does not eat meat, and sometimes other animal products, especially for moral, religious, or health reasons.', tweet.id)
-        elif 'south america' in tweet.full_text.lower():
-            print(str(tweet.id) + '-' +  tweet.full_text)
+            api.update_status('@' + mention.user.screen_name + ans, mention.id)
+        if 'define vegan' in mention.full_text.lower():
+            print('found', flush=True)
+            api.update_status('@' + mention.user.screen_name + " " 'a person who does not eat any food derived from animals and who typically does not use other animal products.', mention.id)
+        if 'define vegetarian' in mention.full_text.lower():
+            print('found', flush=True)
+            api.update_status('@' + mention.user.screen_name + " " 'a person who does not eat meat, and sometimes other animal products, especially for moral, religious, or health reasons.', mention.id)
+        if 'south america' in mention.full_text.lower():
+            print('found', flush=True)
             food=['Black Bean Chili',
             'Quinoa Pesto Salad',
             'Strawberry Salsa',
@@ -105,9 +107,9 @@ def reply_to_tweets():
             num=random.randint(1,10)
             index=food[num-1]
             ans=str(index)
-            api.update_status(ans, tweet.id)
-        elif 'north america' in tweet.full_text.lower():
-            print(str(tweet.id) + '-' +  tweet.full_text)
+            api.update_status('@' + mention.user.screen_name +  ans, mention.id)
+        if 'north america' in mention.full_text.lower():
+            print('found', flush=True)
             food=['Maque choux', 
             'Fried green tomatoe',
             'Avocado toast',
@@ -121,9 +123,9 @@ def reply_to_tweets():
             num=random.randint(1,10)
             index=food[num-1]
             ans=str(index)
-            api.update_status(ans, tweet.id)
-        elif 'asia' in tweet.full_text.lower():
-            print(str(tweet.id) + '-' +  tweet.full_text)
+            api.update_status('@' + mention.user.screen_name + ans, mention.id)
+        if 'asia' in mention.full_text.lower():
+            print('found', flush=True)
             food=['Rice Paper Rolls with Mango and Mint',
             'Vegan Thai Green Curry Soup',
             'Pineapple-Fried Rice',
@@ -137,9 +139,9 @@ def reply_to_tweets():
             num=random.randint(1,10)
             index=food[num-1]
             ans=str(index)
-            api.update_status(ans, tweet.id)
-        elif 'africa' in tweet.full_text.lower():
-            print(str(tweet.id) + '-' +  tweet.full_text)
+            api.update_status('@' + mention.user.screen_name + ans, mention.id)
+        if 'africa' in mention.full_text.lower():
+            print('found', flush=True)
             food=['West African Mango Overnight Oats',
             'Vegan Cornbread',
             'Nutmeg Plantain Pancakes',
@@ -153,10 +155,10 @@ def reply_to_tweets():
             num=random.randint(1,10)
             index=food[num-1]
             ans=str(index)
-            api.update_status(ans, tweet.id)     
-        else:
-            print(str(tweet.id) + '-' +  tweet.full_text)
-            api.update_status('Some things you can say: last post? a vegan? a vegetarian? if you want a recommendation of veetarian food from a continent, just tweet it (except Antarctica)', tweet.id)  
+            api.update_status('@' + mention.user.screen_name + ans, mention.id)
+        
+        
+
 while True:
     reply_to_tweets()
-    time.sleep(14)
+    time.sleep(15)
