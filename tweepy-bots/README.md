@@ -1,6 +1,6 @@
 # Data Project 2: Twitter Bot
 ###### Marina Awad
-I created an interactive Twitter based bot (@datasci25159468) that can help users with what vegetarian and vegan dishes to get at different continents (except for Antarctica). It can also define what a vegan is versus vegetarian, and it can tell the user who and what was the last tweet in the home timeline. When running  the cj.py file, it is important to run it in the bots folder directory.
+I created an interactive Twitter based bot (@datasci25159468) that can help users with what vegetarian and vegan dishes to get at different continents (except for Antarctica). It can also define what a vegan is versus vegetarian, and it can tell the user who and what was the last tweet in the home timeline. When running  the cj.py file, it is important to run it in the bots folder directory. The project utilized the Twitter API and its methods. 
 ## Summary:
 
 - Prints the author and text of the last tweet in your home timeline: 
