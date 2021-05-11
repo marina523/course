@@ -1,4 +1,4 @@
-# Data Project 2: Twitter Bit
+# Data Project 2: Twitter Bot
 ###### Marina Awad
 
 I have written an an interactive, Twitter-based bot. It is mainly themed around vean and veetarian food. The primary code file is called testin.py.
